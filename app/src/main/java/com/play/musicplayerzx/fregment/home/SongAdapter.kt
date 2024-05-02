@@ -36,6 +36,7 @@ class SongAdapter(
         return songList.size
     }
 
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val songTitleTextView: TextView = itemView.findViewById(R.id.songTitle)
         private val durationTextView: TextView = itemView.findViewById(R.id.duration)
