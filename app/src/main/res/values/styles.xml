@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavIconTextStyle">
+        <item name="android:textSize">10sp</item> <!-- Change text size as needed -->
+        <item name="android:textColor">@color/bottom_nav_icon_text_color</item> <!-- Change text color as needed -->
+    </style>
+
+    <style name="BottomNavIconStyle">
+        <item name="android:tint">@color/bottom_nav_icon_text_color</item> <!-- Change icon color as needed -->
+    </style>
+
+</resources>

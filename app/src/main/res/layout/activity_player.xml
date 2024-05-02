@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:foregroundTint="#1DE1CA"
+    android:background="@color/DarkGray"
+tools:context=".fregment.home.PlayerActivity"
+>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="1dp"
+        app:cardBackgroundColor="@color/DarkGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/audioAlbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance"
+            app:srcCompat="@drawable/musicplayer" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/songName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:maxLength="35"
+        android:text="songName"
+        android:textColor="@color/bottom_nav_icon_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+
+<LinearLayout
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:layout_marginBottom="25dp"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/songName">
+
+    <ImageButton
+        android:id="@+id/imageButtonprev"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_weight="1"
+        android:backgroundTint="@android:color/transparent"
+        app:srcCompat="@drawable/ic_prev"
+        app:tint="@color/bottom_nav_icon_text_color" />
+
+    <ImageButton
+        android:id="@+id/imageButton2playpause"
+        android:layout_width="74dp"
+        android:layout_height="54dp"
+        android:layout_weight="1"
+        android:backgroundTint="@android:color/transparent"
+        app:srcCompat="@drawable/ic_play"
+        app:tint="@color/bottom_nav_icon_text_color" />
+
+    <ImageButton
+        android:id="@+id/imageButton3next"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_weight="1"
+        android:backgroundTint="@android:color/transparent"
+        app:srcCompat="@drawable/ic_next"
+        app:tint="@color/bottom_nav_icon_text_color" />
+</LinearLayout>
+
+<SeekBar
+    android:id="@+id/seekBar"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="52dp"
+   android:secondaryProgressTint="@color/bottom_nav_icon_text_color"
+    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/songName"
+    app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="swarsangam"
+        android:textColor="@color/bottom_nav_icon_text_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/cardView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
