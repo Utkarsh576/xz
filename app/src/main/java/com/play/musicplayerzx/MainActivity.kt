@@ -1,5 +1,6 @@
 package com.play.musicplayerzx
 import android.Manifest
+import android.app.AlertDialog
 import android.content.ContentUris
 
 import android.content.pm.PackageManager
@@ -7,6 +8,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -19,6 +21,7 @@ import com.play.musicplayerzx.fregment.HomeFragment
 import com.play.musicplayerzx.fregment.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
+    private var backPressedOnce = false
 
     private lateinit var binding: ActivityMainBinding
 
@@ -195,5 +198,35 @@ class MainActivity : AppCompatActivity() {
 
         */
     }
+    override fun onBackPressed() {
+        if (backPressedOnce) {
+            super.onBackPressed()
+            return showExitConfirmationDialog()
+        }
+
+        this.backPressedOnce = true
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
+
+        // Reset backPressedOnce after a delay
+        android.os.Handler().postDelayed(
+            { backPressedOnce = false },
+            2000 // Time interval in milliseconds
+        )
+    }
+    private fun showExitConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Exit")
+            .setMessage("Are you sure you want to exit?")
+            .setPositiveButton("Exit") { dialog, _ ->
+                dialog.dismiss()
+                finish()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
 
 }
