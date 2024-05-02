@@ -3,8 +3,6 @@ package com.play.musicplayerzx.services
 
 
 
-
-
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
@@ -17,15 +15,15 @@ import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 
 import androidx.core.app.NotificationCompat
+import com.play.musicplayerzx.R
+import com.play.musicplayerzx.fregment.home.PlayerActivity
 
 
-
-class MusicService : Service()
-{
+class MusicService : Service() {
     private val binder = MusicBinder()
     var mediaPlayer: MediaPlayer? = null
     private lateinit var mediaSession: MediaSessionCompat
-    lateinit var audioManager: AudioManager
+
 
     inner class MusicBinder : Binder() {
         fun getService(): MusicService = this@MusicService
@@ -35,7 +33,7 @@ class MusicService : Service()
         mediaSession = MediaSessionCompat(baseContext, "My music")
         return binder
     }
-/*
+
     fun showNotification(playPausebtn: Int) {
         // Create intent for previous action
         val prevIntent = Intent(baseContext, NotificationActionReceiver::class.java).setAction(AppClass.PREV)
@@ -63,7 +61,7 @@ class MusicService : Service()
         val notification = NotificationCompat.Builder(this, AppClass.CHANNEL_ID)
             .setContentTitle(PlayerActivity.songList[PlayerActivity.currentPosition].title)
             .setContentText(PlayerActivity.songList[PlayerActivity.currentPosition].artist)
-            .setSmallIcon(R.drawable.musicalnote)
+            .setSmallIcon(R.drawable.musicplayer)
             .setLargeIcon(img)
             .setStyle(androidx.media.app.NotificationCompat.MediaStyle().setMediaSession(mediaSession.sessionToken))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -88,7 +86,9 @@ class MusicService : Service()
 
     fun startForeground(b: Boolean) {
 
-    }*/
+    }
+
+
 
 }
 

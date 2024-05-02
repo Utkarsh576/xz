@@ -9,8 +9,11 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <application
+        android:name=".services.AppClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -44,6 +47,7 @@
         <service
             android:name=".services.MusicService"
             android:foregroundServiceType="mediaPlayback" />
+        <receiver android:name=".services.NotificationActionReceiver" />
     </application>
 
 </manifest>

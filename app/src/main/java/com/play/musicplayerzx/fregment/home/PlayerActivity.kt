@@ -3,8 +3,10 @@ package com.play.musicplayerzx.fregment.home
 
 
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -20,6 +22,7 @@ import com.play.musicplayerzx.MainActivity
 import com.play.musicplayerzx.R
 import com.play.musicplayerzx.databinding.ActivityPlayerBinding
 import com.play.musicplayerzx.services.MusicService
+import com.play.musicplayerzx.setSongPosition
 
 
 class PlayerActivity : AppCompatActivity(),ServiceConnection {
@@ -100,7 +103,7 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
             musicService!!.mediaPlayer!!.prepare()
           musicService!!.mediaPlayer!!.start()
             isPlaying = true
-           // musicService!!.showNotification(R.drawable.ic_pause)
+            musicService!!.showNotification(R.drawable.ic_pause)
 
             updatePlayPauseButton()
             updateSeekBar()
@@ -179,14 +182,14 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
 
     private fun pauseSong() {
         musicService!!.mediaPlayer!!.pause()
-        //musicService!!.showNotification(R.drawable.ic_play)
+        musicService!!.showNotification(R.drawable.ic_play)
         isPlaying = false
         updatePlayPauseButton()
     }
 
     private fun resumeSong() {
         musicService!!.mediaPlayer!!.start()
-      //  musicService!!.showNotification(R.drawable.ic_pause)
+        musicService!!.showNotification(R.drawable.ic_pause)
         isPlaying = true
         updatePlayPauseButton()
         updateSeekBar()
@@ -205,7 +208,7 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
             setSongPosition(false)
             ui()
         }
-    }
+    }/*
     fun setSongPosition(increment:Boolean){
 
         if (increment) {
@@ -219,7 +222,7 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
                 PlayerActivity.currentPosition = PlayerActivity.songList.size - 1
             }
         }
-    }
+    }*/
 
 
 
@@ -232,6 +235,7 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
         val binder = service as MusicService.MusicBinder
         musicService = binder.getService()
         createMediaPlayer()
+
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
