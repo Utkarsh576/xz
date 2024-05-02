@@ -2,10 +2,13 @@ package com.play.musicplayerzx.fregment.home
 
 
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +19,10 @@ import com.play.musicplayerzx.AudioFile
 import com.play.musicplayerzx.MainActivity
 import com.play.musicplayerzx.R
 import com.play.musicplayerzx.databinding.ActivityPlayerBinding
+import com.play.musicplayerzx.services.MusicService
 
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity(),ServiceConnection {
 
     companion object {
         lateinit var songList: List<AudioFile>
@@ -26,7 +30,8 @@ class PlayerActivity : AppCompatActivity() {
         var isPlaying: Boolean = false
         var handler: Handler = Handler()
         var runnable: Runnable? = null
-        var `mediaPlayer`:MediaPlayer?=null
+       // var mediaPlayer:MediaPlayer?=null
+        var musicService:MusicService?=null
 
 
         @Suppress("StaticFieldLeak")
@@ -45,6 +50,9 @@ class PlayerActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val intent = Intent(this, MusicService::class.java)
+        bindService(intent, this, BIND_AUTO_CREATE)
+        startService(intent)
 
 
         initializeLayout()
@@ -63,10 +71,12 @@ class PlayerActivity : AppCompatActivity() {
         }
 
 
-           `mediaPlayer`?.setOnCompletionListener {
+        musicService?.let {
+            it.mediaPlayer?.setOnCompletionListener {
                 // Automatically move to the next song when the current one finishes
                 prevnextsong(true)
             }
+        }
 
         createMediaPlayer()
 
@@ -84,11 +94,11 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun createMediaPlayer() {
         try {
-            if (`mediaPlayer` == null) `mediaPlayer` = MediaPlayer()
-            `mediaPlayer`!!.reset()
-         `mediaPlayer`!!.setDataSource(songList[currentPosition].path)
-            `mediaPlayer`!!.prepare()
-          `mediaPlayer`!!.start()
+            if (musicService!!.mediaPlayer == null) musicService!!.mediaPlayer = MediaPlayer()
+            musicService!!.mediaPlayer!!.reset()
+         musicService!!.mediaPlayer!!.setDataSource(songList[currentPosition].path)
+            musicService!!.mediaPlayer!!.prepare()
+          musicService!!.mediaPlayer!!.start()
             isPlaying = true
            // musicService!!.showNotification(R.drawable.ic_pause)
 
@@ -149,7 +159,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun updateSeekBar() {
         runnable = Runnable {
-           `mediaPlayer`?.let {
+           musicService!!.mediaPlayer?.let {
                 binding.seekBar.max = it.duration
                 binding.seekBar.progress = it.currentPosition
                 //binding.currentTimeTextView.text = formatDuration(it.currentPosition)
@@ -168,14 +178,14 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun pauseSong() {
-        `mediaPlayer`!!.pause()
+        musicService!!.mediaPlayer!!.pause()
         //musicService!!.showNotification(R.drawable.ic_play)
         isPlaying = false
         updatePlayPauseButton()
     }
 
     private fun resumeSong() {
-        `mediaPlayer`!!.start()
+        musicService!!.mediaPlayer!!.start()
       //  musicService!!.showNotification(R.drawable.ic_pause)
         isPlaying = true
         updatePlayPauseButton()
@@ -216,6 +226,16 @@ class PlayerActivity : AppCompatActivity() {
     private fun ui() {
         createMediaPlayer()
         setLayoutUI()
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        val binder = service as MusicService.MusicBinder
+        musicService = binder.getService()
+        createMediaPlayer()
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        musicService = null
     }
 
 
