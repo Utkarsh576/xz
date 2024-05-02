@@ -55,8 +55,14 @@ class SongAdapter(
 
         fun bind(song: AudioFile) {
             songTitleTextView.text = song.title
-            durationTextView.text = song.duration.toString() // Assuming duration is stored as milliseconds
-            songSizeTextView.text = song.size.toString() // Assuming size is stored in bytes
+
+            val minutes = (song.duration / 1000) / 60
+            val seconds = (song.duration / 1000) % 60
+            durationTextView.text = String.format("%02d:%02d", minutes, seconds)
+
+            // Convert size from bytes to megabytes
+            val sizeInMB = "%.2f".format(song.size.toDouble() / (1024 * 1024)) // Convert bytes to megabytes with 2 decimal places
+            songSizeTextView.text = "${sizeInMB} MB"// Assuming size is stored in bytes
 
             // Load song art using Glide
             Glide.with(itemView)
