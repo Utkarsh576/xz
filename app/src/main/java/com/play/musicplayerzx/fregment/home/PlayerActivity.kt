@@ -1,9 +1,13 @@
 package com.play.musicplayerzx.fregment.home
+import androidx.palette.graphics.Palette
+import android.graphics.Bitmap
+import com.bumptech.glide.request.transition.Transition
 
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -11,18 +15,20 @@ import android.os.Handler
 import android.os.IBinder
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
 import com.play.musicplayerzx.AudioFile
 import com.play.musicplayerzx.MainActivity
 import com.play.musicplayerzx.R
 import com.play.musicplayerzx.databinding.ActivityPlayerBinding
 import com.play.musicplayerzx.services.MusicService
-
 class PlayerActivity : AppCompatActivity(), ServiceConnection {
     private lateinit var audioManager: AudioManager
     private lateinit var phoneStateListener: PhoneStateListener
@@ -68,6 +74,10 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
         val intent = Intent(this, MusicService::class.java)
         bindService(intent, this, Context.BIND_AUTO_CREATE)
         startService(intent)
+
+
+
+
     }
 
     override fun onDestroy() {
@@ -84,6 +94,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
         dataListSet(intent)
         setLayoutUI()
     }
+
+
 
     private fun updateSeekBar() {
         runnable = Runnable {
@@ -147,6 +159,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
         musicService?.mediaPlayer?.pause()
         isPlaying = false
         updatePlayPauseButton()
+        musicService?.showNotification(R.drawable.ic_play)
     }
 
     private fun resumeSong() {
