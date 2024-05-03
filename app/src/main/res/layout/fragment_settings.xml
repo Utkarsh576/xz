@@ -7,6 +7,21 @@
     android:background="@color/DarkGray"
     tools:context=".fregment.SettingsFragment">
 
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:padding="2dp"
+        android:text="setting"
+        android:textColor="@color/bottom_nav_icon_text_color"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Developer Information -->
     <TextView
         android:id="@+id/developer_info"

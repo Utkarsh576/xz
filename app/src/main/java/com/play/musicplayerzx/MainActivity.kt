@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.play.musicplayerzx.databinding.ActivityMainBinding
 import com.play.musicplayerzx.fregment.HomeFragment
 import com.play.musicplayerzx.fregment.SettingsFragment
+import com.play.musicplayerzx.fregment.home.SongFragment
 
 class MainActivity : AppCompatActivity() {
     private var backPressedOnce = false
@@ -183,8 +184,10 @@ class MainActivity : AppCompatActivity() {
                     artistList.add(artist)
                 }
 
+
             }
         }
+
     }
     companion object {
 

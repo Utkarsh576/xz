@@ -7,6 +7,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fregment.HomeFragment">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:padding="2dp"
+        android:text="Home"
+        android:textColor="@color/bottom_nav_icon_text_color"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -14,20 +28,20 @@
         android:background="@color/DarkGray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            android:background="@color/DarkGray"
-            app:tabIndicator="@color/bottom_nav_icon_text_color"
-            app:tabSelectedTextAppearance="@color/bottom_nav_icon_text_color"
-            app:tabTextColor="@color/white"
-            app:tabRippleColor="@color/bottom_nav_icon_text_color"
-            app:tabSelectedTextColor="@color/bottom_nav_icon_text_color"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed" />
+            android:background="@color/DarkGray"
+            app:tabIndicator="@color/bottom_nav_icon_text_color"
+            app:tabMode="fixed"
+            app:tabRippleColor="@color/bottom_nav_icon_text_color"
+
+            app:tabSelectedTextAppearance="@color/bottom_nav_icon_text_color"
+            app:tabSelectedTextColor="@color/bottom_nav_icon_text_color"
+            app:tabTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
