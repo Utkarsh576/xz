@@ -1,8 +1,5 @@
 package com.play.musicplayerzx.fregment.home
 
-import com.play.musicplayerzx.MainActivity
-
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,40 +8,46 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.play.musicplayerzx.R
-
+import com.play.musicplayerzx.MainActivity
+import com.play.musicplayerzx.databinding.FragmentArtistBinding
 
 class ArtistFragment : Fragment(), ArtistAdapter.OnArtistItemClickListener {
+    private lateinit var binding: FragmentArtistBinding
+    private lateinit var adapter: ArtistAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_artist, container, false)
+        // Inflate the layout for this fragment using view binding
+        binding = FragmentArtistBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Find the RecyclerView from the layout
-        val recyclerView: RecyclerView = view.findViewById(R.id.artistRv)
+        // Set audio data change listener
+        (requireActivity() as? MainActivity<*>)?.setAudioDataChangeListener(this)
 
-        // Set layout manager
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        // Set adapter
-        val adapter = ArtistAdapter(requireContext(), MainActivity.artistList, this)
-        recyclerView.adapter = adapter
+        // Set up RecyclerView
+        binding.artistRv.layoutManager = LinearLayoutManager(requireContext())
+        adapter = ArtistAdapter(requireContext(), MainActivity.artistList, this)
+        binding.artistRv.adapter = adapter
     }
 
     override fun onItemClick(position: Int, artistList: List<String>) {
         Toast.makeText(requireContext(), "Clicked on artist: ${artistList[position]}", Toast.LENGTH_SHORT).show()
         val intent = Intent(requireContext(), ArtistD::class.java)
         intent.putExtra("position", position)
-
         startActivity(intent)
+    }
+
+    // Function to update UI with new data list
+    fun updateUIWithNewDataList() {
+        // Update the UI with the new data list
+        // For example, if you have a RecyclerView adapter, you can notify it like this:
+        adapter.notifyDataSetChanged()
     }
 }

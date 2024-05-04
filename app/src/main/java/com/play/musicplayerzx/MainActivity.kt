@@ -19,10 +19,26 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.play.musicplayerzx.databinding.ActivityMainBinding
 import com.play.musicplayerzx.fregment.HomeFragment
 import com.play.musicplayerzx.fregment.SettingsFragment
+import com.play.musicplayerzx.fregment.home.AlbumFragment
+import com.play.musicplayerzx.fregment.home.ArtistFragment
+import com.play.musicplayerzx.fregment.home.FolderFragment
 import com.play.musicplayerzx.fregment.home.SongFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity<T> : AppCompatActivity() {
     private var backPressedOnce = false
+    private var songFragment: SongFragment? = null
+    private var albumFragment: AlbumFragment? = null
+    private var artistFragment: ArtistFragment? = null
+    private var folderFragment: FolderFragment? = null
+    // Function to set the listener for data changes
+    fun setAudioDataChangeListener(fragment: SongFragment) {
+        this.songFragment = fragment}
+    fun setAudioDataChangeListener(fragment: AlbumFragment) {
+        this.albumFragment = fragment}
+    fun setAudioDataChangeListener(fragment: ArtistFragment) {
+        this.artistFragment = fragment}
+    fun setAudioDataChangeListener(fragment: FolderFragment) {
+        this.folderFragment = fragment}
 
     private lateinit var binding: ActivityMainBinding
 
@@ -47,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
+
 
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val selectedFragment: Fragment = when (item.itemId) {
@@ -187,6 +204,11 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+        songFragment?.updateUIWithNewDataList()
+        albumFragment?.updateUIWithNewDataList()
+        artistFragment?.updateUIWithNewDataList()
+        folderFragment?.updateUIWithNewDataList()
+
 
     }
     companion object {
@@ -230,6 +252,8 @@ class MainActivity : AppCompatActivity() {
             .create()
             .show()
     }
+
+
 
 
 }

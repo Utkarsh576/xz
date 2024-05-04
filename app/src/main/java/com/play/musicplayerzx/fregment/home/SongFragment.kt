@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.play.musicplayerzx.AudioFile
 import com.play.musicplayerzx.MainActivity
+import com.play.musicplayerzx.databinding.FragmentSongBinding
 import com.play.swarsangam.fregmentnav.musicfregment.songsfregment.SongAdapter
 
 
 class SongFragment : Fragment(), SongAdapter.OnItemClickListener {
+    private lateinit var binding: FragmentSongBinding
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SongAdapter
@@ -30,6 +32,9 @@ class SongFragment : Fragment(), SongAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as? MainActivity<Any?>)?.setAudioDataChangeListener(this)
+        binding = FragmentSongBinding.bind(view)
+        binding.SongRv.setItemViewCacheSize(10)
         recyclerView = view.findViewById(R.id.SongRv)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = SongAdapter(requireContext(), MainActivity.audioList, this)
@@ -41,8 +46,12 @@ class SongFragment : Fragment(), SongAdapter.OnItemClickListener {
         intent.putExtra("position", position)
         startActivity(intent)
     }
+    fun updateUIWithNewDataList() {
+        // Update the UI with the new data list
+        // For example, if you have a RecyclerView adapter, you can notify it like this:
+        adapter.notifyDataSetChanged()
+    }
 
-    // Function to update RecyclerView with new data
-    
+
 }
 
