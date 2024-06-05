@@ -67,6 +67,14 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
         binding.imageButton2playpause.setOnClickListener { togglePlayPause() }
         binding.imageButton3next.setOnClickListener { prevNextSong(true) }
 
+        musicService?.let {
+            it.mediaPlayer?.setOnCompletionListener {
+                // Automatically move to the next song when the current one finishes
+                prevNextSong(true)
+            }
+        }
+
+
         // Initialize PhoneStateListener
         initPhoneStateListener()
 
